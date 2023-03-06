@@ -1,0 +1,12 @@
+{
+    "screen": {
+        "resolution": [1920, 1080],
+        "url_coord": [390, 60]
+    },
+    "config": {
+        "tesseract-recognition-try": 32
+    },
+    "urls": {
+        "home-page": "https://prenotami.esteri.it/"
+    }
+}

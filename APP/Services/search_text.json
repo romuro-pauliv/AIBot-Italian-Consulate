@@ -1,0 +1,17 @@
+{   
+    "page-config": {
+        "language": "ITA"
+    },
+    "login-page": {
+        "email-box": "Email",
+        "password-box": "Password",
+        "submit": "AVANTI"
+    },
+    "login-page-confirmation": {
+        "header-page-ITA": "Ministero"
+    },
+    "home-page-confirmation": {
+        "header-page-NA": "Renan",
+        "function-page-ITA": "Prenota"
+    }
+}
