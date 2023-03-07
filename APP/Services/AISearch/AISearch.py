@@ -84,3 +84,50 @@ class AISearch(object):
         if count >= self.AI_loop_try:
             log.AISearch_failed("AiSearch2true", page, search_text)
         return False
+    
+    def search2coord(self, page: str, search_text: str) -> dict[str, int] | bool:
+        count: int = 0
+        log = Log()
+        
+        while count < self.AI_loop_try:
+            imageObj = ImageTools(0, 0, self.resolution[0], self.resolution[1])
+            coord: dict[str, int] | bool = imageObj.search_data2img(search_text)
+            log.AISearch_loading(count, "AISearch2coord", page, search_text)
+            
+            if coord != False:
+                log.AISearch_complete("AISearch2coord", page, search_text)
+                return coord
+            else:
+                updown_page(count)
+                count += 1
+        
+        if count >= self.AI_loop_try:
+            log.AISearch_failed("AISearch2coord", page, search_text)
+        return False
+    
+    def PERsearch2click(self, page: str, search_text: str, resolution: tuple[int],
+                        increment_x: int = 20, increment_y: int = 20) -> None:
+        count: int = 0
+        log = Log()
+        
+        while count < self.AI_loop_try:
+            imageObj = ImageTools(resolution[0], resolution[1], resolution[2], resolution[3])
+            coord: dict[str, int] | bool = imageObj.search_data2img_hard(search_text)
+            
+            log.AISearch_loading(count, "AIsearch2click", page, search_text)
+            
+            if coord != False:
+                Cx: int = coord[0]
+                Cy: int = coord[1] + resolution[0]
+                
+                GUI.click((Cx + increment_x), (Cy + increment_y))
+                # GUI.click(0, (self.resolution[1] - 20))
+                log.AISearch_complete("GUsearch2click", page, search_text)
+                break
+            else:
+                sleep(0.1)
+                count += 1
+        
+        if count >= self.AI_loop_try:
+            log.AISearch_failed("GUsearch2click", page, search_text)
+        return False

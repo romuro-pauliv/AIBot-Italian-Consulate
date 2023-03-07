@@ -36,3 +36,14 @@ class ImageTools(object):
             if word.strip() == search_text:
                 return data['left'][i], data['top'][i], data['width'][i], data['height'][i]
         return False
+    
+    def search_data2img_hard(self, search_text: str) -> dict[str, int] | bool:
+        self.screenshot()
+        self.image = Preprocessing.thresholding(self.image)
+        
+        data: dict[str] = pytesseract.image_to_data(self.image, output_type=pytesseract.Output.DICT)
+                
+        for i, word in enumerate(data['text']):
+            if word.strip() == search_text:
+                return data['left'][i], data['top'][i], data['width'][i], data['height'][i]
+        return False

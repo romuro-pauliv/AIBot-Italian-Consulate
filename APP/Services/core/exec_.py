@@ -63,9 +63,37 @@ def home_page_exec() -> bool:
         # Verify if in LoginPage or HomePage and adjust bot
         login_page_exec()
         return False
+
+
+def prenota_page_exec() -> bool:
+    AIOBJ = AISearch()
     
+    item_coord: bool | tuple[int] = AIOBJ.search2coord("PrenotaPage", "CITTADINANZA")
     
+    if item_coord != False:
+        # | Personalized Item Resolution 
+        xy: dict[str, int] = {"x": 0, 'y': (item_coord[1]-50)}
+        len_xy: dict[str, int] = {"x": config_data['screen']['resolution'][0], "y": 150}
+        data: tuple[int] = (xy['y'], xy['x'], len_xy['x'], len_xy["y"])
     
+        # Click in Prenota
+        AIOBJ.PERsearch2click("PrenotaPage", "PRENOTA", data, 10, 10)
+        if AIOBJ.search2true("PrenotaPage", "OK"):
+            AIOBJ.search2click("PrenotaPage", "OK")
+            return False
+    
+    else:
+        write_url_bar(config_data['urls']['home-page'])
+        # Verify if in LoginPage or HomePage and adjust bot
+        response_login: bool = login_page_exec()
+        while response_login == False:
+            response_login: bool = login_page_exec()
+    
+        response_home: bool = home_page_exec()
+        while response_home == False:
+            response_home: bool = home_page_exec()
+        return False
+        
 def execution() -> None:
     response_login: bool = login_page_exec()
     while response_login == False:
@@ -74,3 +102,7 @@ def execution() -> None:
     response_home: bool = home_page_exec()
     while response_home == False:
         response_home: bool = home_page_exec()
+    
+    response_prenota: bool = prenota_page_exec()
+    while response_prenota == False:
+        response_prenota: bool = prenota_page_exec()
