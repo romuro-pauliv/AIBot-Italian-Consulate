@@ -10,6 +10,7 @@ from Services.AISearch.AISearch import AISearch
 from Tools.json.read_json import read_json
 from Tools.page.zoom import zoom_in, zoom_out
 from Tools.page.url_bar import write_url_bar
+from time import sleep
 # |--------------------------------------------------------------------------------------------------------------------|
 
 search_text: dict[str] = read_json("Services/search_text.json")
@@ -42,7 +43,7 @@ def home_page_exec() -> bool:
     AIOBJ = AISearch()
     
     # Change to ITALIAN language
-    AIOBJ.search2click("HomePageNA", search_text["config"]["language"], 10, 10)
+    AIOBJ.search2click("HomePageNA", search_text["config"]["language"], 10, 10), sleep(10)
     
     # if in ITA HomePage
     if AIOBJ.search2true("root", search_text["HomePage"]["confirmation"]["function-page-ITA"], False):
@@ -52,7 +53,7 @@ def home_page_exec() -> bool:
         if AIOBJ.search2true("BookPageITA", search_text["PrenotaPage"]["confirmation"]["header-page-ITA"]):
             return True
         else:
-            write_url_bar(config_data['urls']['home-page'])
+            write_url_bar(config_data['urls']['home-page']), sleep(10)
             # Verify if in LoginPage or HomePage and adjust bot
             login_page_exec()
             return False
@@ -68,7 +69,7 @@ def home_page_exec() -> bool:
 def prenota_page_exec() -> bool:
     AIOBJ = AISearch()
     
-    item_coord: bool | tuple[int] = AIOBJ.search2coord("PrenotaPage", "CITTADINANZA")
+    item_coord: bool | tuple[int] = AIOBJ.search2coord("PrenotaPage", search_text["PrenotaPage"]['search-cood']['itemlist-ITA'])
     
     if item_coord != False:
         # | Personalized Item Resolution 
@@ -77,9 +78,9 @@ def prenota_page_exec() -> bool:
         data: tuple[int] = (xy['y'], xy['x'], len_xy['x'], len_xy["y"])
     
         # Click in Prenota
-        AIOBJ.PERsearch2click("PrenotaPage", "PRENOTA", data, 10, 10)
-        if AIOBJ.search2true("PrenotaPage", "OK"):
-            AIOBJ.search2click("PrenotaPage", "OK")
+        AIOBJ.PERsearch2click("PrenotaPage", search_text['PrenotaPage']['search-text']['prenota-item-box'], data, 10, 10)
+        if AIOBJ.search2true("PrenotaPage", search_text['ErrorPopup']['confirmation']['in-text-popup']):
+            AIOBJ.search2click("PrenotaPage", search_text['ErrorPopup']['confirmation']['in-text-popup'], 160, 100)
             return False
     
     else:

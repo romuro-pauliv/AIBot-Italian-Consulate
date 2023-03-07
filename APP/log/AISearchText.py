@@ -14,7 +14,7 @@ class Log:
     def __init__(self):
         self.AI_loop = read_json("Tools/json/data.json")["config"]["tesseract-recognition-try"]
         self.info_space = 27
-        self.searchtext_space = 10
+        self.searchtext_space = 15
         self.percent_space = 3
         
     def _get_loading_line(self, count: int) -> str:

@@ -21,3 +21,4 @@ def write_url_bar(url: str) -> None:
     GUI.write(url), sleep(0.1)
     GUI.press("enter"), sleep(0.1)
     GUI.click(0, (resolution[1] - 20)), sleep(0.1)  # Return to HTML page
+    sleep(10)

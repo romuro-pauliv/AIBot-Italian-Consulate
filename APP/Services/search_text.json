@@ -24,6 +24,17 @@
     "PrenotaPage": {
         "confirmation": {
             "header-page-ITA": "Servizi"
+        },
+        "search-cood": {
+            "itemlist-ITA": "CITTADINANZA"
+        },
+        "search-text": {
+            "prenota-item-box": "PRENOTA"
+        }
+    },
+    "ErrorPopup": {
+        "confirmation": {
+            "in-text-popup": "richiesto"
         }
     }
 }

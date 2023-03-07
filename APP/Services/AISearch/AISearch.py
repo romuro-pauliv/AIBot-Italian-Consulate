@@ -27,7 +27,12 @@ class AISearch(object):
         
         while count < self.AI_loop_try:
             ImageObj = ImageTools(0, 0, self.resolution[0], self.resolution[1])
-            coord: dict[str, int] | bool = ImageObj.search_data2img(search_text)
+            
+            alternator = lambda num: num % 2 == 0
+            if alternator(count):
+                coord: dict[str, int] | bool = ImageObj.search_data2img_hard(search_text)
+            else:
+                coord: dict[str, int] | bool = ImageObj.search_data2img(search_text)
             
             log.AISearch_loading(count, "AISearch2write", page, search_text)
             
@@ -49,7 +54,12 @@ class AISearch(object):
         
         while count < self.AI_loop_try:
             imageObj = ImageTools(0, 0, self.resolution[0], self.resolution[1])
-            coord: dict[str, int] | bool = imageObj.search_data2img(search_text)
+            
+            alternator = lambda num: num % 2 == 0
+            if alternator(count):
+                coord: dict[str, int] | bool = imageObj.search_data2img_hard(search_text)
+            else:
+                coord: dict[str, int] | bool = imageObj.search_data2img(search_text)
             
             log.AISearch_loading(count, "AISearch2click", page, search_text)
             
@@ -71,7 +81,12 @@ class AISearch(object):
         
         while count < self.AI_loop_try:
             imageObj = ImageTools(0, 0, self.resolution[0], self.resolution[1])
-            coord: dict[str, int] | bool = imageObj.search_data2img(search_text)
+            
+            alternator = lambda num: num % 2 == 0
+            if alternator(count):
+                coord: dict[str, int] | bool = imageObj.search_data2img_hard(search_text)
+            else:
+                coord: dict[str, int] | bool = imageObj.search_data2img(search_text)
             
             log.AISearch_loading(count, "AISearch2true", page, search_text)
             
@@ -91,7 +106,13 @@ class AISearch(object):
         
         while count < self.AI_loop_try:
             imageObj = ImageTools(0, 0, self.resolution[0], self.resolution[1])
-            coord: dict[str, int] | bool = imageObj.search_data2img(search_text)
+            
+            alternator = lambda num: num % 2 == 0
+            if alternator(count):
+                coord: dict[str, int] | bool = imageObj.search_data2img_hard(search_text)
+            else:
+                coord: dict[str, int] | bool = imageObj.search_data2img(search_text)
+            
             log.AISearch_loading(count, "AISearch2coord", page, search_text)
             
             if coord != False:
@@ -112,7 +133,12 @@ class AISearch(object):
         
         while count < self.AI_loop_try:
             imageObj = ImageTools(resolution[0], resolution[1], resolution[2], resolution[3])
-            coord: dict[str, int] | bool = imageObj.search_data2img_hard(search_text)
+            
+            alternator = lambda num: num % 2 == 0
+            if alternator(count):
+                coord: dict[str, int] | bool = imageObj.search_data2img_hard(search_text)
+            else:
+                coord: dict[str, int] | bool = imageObj.search_data2img(search_text)
             
             log.AISearch_loading(count, "AIsearch2click", page, search_text)
             
