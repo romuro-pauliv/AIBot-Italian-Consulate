@@ -1,17 +1,29 @@
-{   
-    "page-config": {
+{
+    "config": {
         "language": "ITA"
     },
-    "login-page": {
-        "email-box": "Email",
-        "password-box": "Password",
-        "submit": "AVANTI"
+    "Login": {
+        "search-text": {
+            "email-box": "Email",
+            "password-box": "Password",
+            "submit-box": "AVANTI"
+        },
+        "confirmation": {
+            "header-page-ITA": "Ministero"
+        }
     },
-    "login-page-confirmation": {
-        "header-page-ITA": "Ministero"
+    "HomePage": {
+        "search-text": {
+            "prenota-box": "Prenota"
+        },
+        "confirmation": {
+            "header-page-NA": "Renan",
+            "function-page-ITA": "Prenota"
+        }
     },
-    "home-page-confirmation": {
-        "header-page-NA": "Renan",
-        "function-page-ITA": "Prenota"
+    "PrenotaPage": {
+        "confirmation": {
+            "header-page-ITA": "Servizi"
+        }
     }
 }

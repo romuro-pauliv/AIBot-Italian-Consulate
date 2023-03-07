@@ -18,27 +18,50 @@ config_data: dict[str] = read_json("Tools/json/data.json")
 
 def login_page_exec() -> bool:
     AIOBJ = AISearch()
-    if AIOBJ.search2true("root", search_text['home-page-confirmation']['header-page-NA'], False):
+    
+    # if in HomePage
+    if AIOBJ.search2true("root", search_text["HomePage"]["confirmation"]["header-page-NA"]):
         return True
     
-    elif AIOBJ.search2true("root", search_text['login-page-confirmation']["header-page-ITA"], False):
-        AIOBJ.search2write("LoginPageITA", search_text["login-page"]['email-box'], credentials['email'])
-        AIOBJ.search2write("LoginPageITA", search_text["login-page"]['password-box'], credentials['password'])
-        AIOBJ.search2click("LoginPageITA", search_text["login-page"]['submit'])    
-        return True if AIOBJ.search2true("root", search_text['home-page-confirmation']['header-page-NA'], False) else False
+    # if in Login Page
+    elif AIOBJ.search2true("root", search_text["Login"]["confirmation"]["header-page-ITA"]):
+        # Input Crendentials and Log-In    
+        AIOBJ.search2write("LoginPageITA", search_text["Login"]["search-text"]["email-box"], credentials['email'])
+        AIOBJ.search2write("LoginPageITA", search_text["Login"]["search-text"]["password-box"], credentials['password'])
+        AIOBJ.search2click("LoginPageITA", search_text["Login"]["search-text"]["submit-box"])
+        
+        # if in HomePage 
+        return True if AIOBJ.search2true("root", search_text["HomePage"]["confirmation"]["header-page-NA"]) else False
     
+    # if page not found
     else:
         write_url_bar(config_data['urls']['home-page'])
         return False
 
 def home_page_exec() -> bool:
     AIOBJ = AISearch()
-    AIOBJ.search2click("HomePageNA", search_text['page-config']['language'], 10, 10)
-    if AIOBJ.search2true("root", search_text['home-page-confirmation']['function-page-ITA'], False):
-        AIOBJ.search2click("HomePageITA", search_text['home-page-confirmation']['function-page-ITA'])
-        return True
+    
+    # Change to ITALIAN language
+    AIOBJ.search2click("HomePageNA", search_text["config"]["language"], 10, 10)
+    
+    # if in ITA HomePage
+    if AIOBJ.search2true("root", search_text["HomePage"]["confirmation"]["function-page-ITA"], False):
+        AIOBJ.search2click("HomePageITA", search_text["HomePage"]["search-text"]["prenota-box"])
+        
+        # if in ITA Prenota Page
+        if AIOBJ.search2true("BookPageITA", search_text["PrenotaPage"]["confirmation"]["header-page-ITA"]):
+            return True
+        else:
+            write_url_bar(config_data['urls']['home-page'])
+            # Verify if in LoginPage or HomePage and adjust bot
+            login_page_exec()
+            return False
+    
+    # if not found ITA HomePage
     else:
         write_url_bar(config_data['urls']['home-page'])
+        # Verify if in LoginPage or HomePage and adjust bot
+        login_page_exec()
         return False
     
     
