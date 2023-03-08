@@ -8,8 +8,10 @@
 # | Imports |----------------------------------------------------------------------------------------------------------|
 from Services.AISearch.AISearch import AISearch
 from Tools.json.read_json import read_json
-from Tools.page.zoom import zoom_in, zoom_out
 from Tools.page.url_bar import write_url_bar
+from Tools.sound.play_beep import play_alert
+
+from Services.Process.coord_calculation import flotation_resolution
 from time import sleep
 # |--------------------------------------------------------------------------------------------------------------------|
 
@@ -69,30 +71,39 @@ def home_page_exec() -> bool:
 def prenota_page_exec() -> bool:
     AIOBJ = AISearch()
     
-    item_coord: bool | tuple[int] = AIOBJ.search2coord("PrenotaPage", search_text["PrenotaPage"]['search-cood']['itemlist-ITA'])
-    
-    if item_coord != False:
-        # | Personalized Item Resolution 
-        xy: dict[str, int] = {"x": 0, 'y': (item_coord[1]-50)}
-        len_xy: dict[str, int] = {"x": config_data['screen']['resolution'][0], "y": 150}
-        data: tuple[int] = (xy['y'], xy['x'], len_xy['x'], len_xy["y"])
-    
-        # Click in Prenota
-        AIOBJ.PERsearch2click("PrenotaPage", search_text['PrenotaPage']['search-text']['prenota-item-box'], data, 10, 10)
-        if AIOBJ.search2true("PrenotaPage", search_text['ErrorPopup']['confirmation']['in-text-popup']):
-            AIOBJ.search2click("PrenotaPage", search_text['ErrorPopup']['confirmation']['in-text-popup'], 160, 100)
-            return False
-    
-    else:
+    def reboot() -> None:
         write_url_bar(config_data['urls']['home-page'])
         # Verify if in LoginPage or HomePage and adjust bot
         response_login: bool = login_page_exec()
         while response_login == False:
             response_login: bool = login_page_exec()
-    
+
         response_home: bool = home_page_exec()
         while response_home == False:
             response_home: bool = home_page_exec()
+    
+    item_coord: bool | tuple[int] = AIOBJ.search2coord("PrenotaPage", search_text["PrenotaPage"]['search-cood']['itemlist-ITA'])
+    
+    if item_coord != False:
+        # | Personalized Item Resolution 
+        data: tuple[int] = flotation_resolution(item_coord)
+    
+        # Click in Prenota
+        AIOBJ.PERsearch2click("PrenotaPage", search_text['PrenotaPage']['search-text']['prenota-item-box'], data, 10, 10)
+        if AIOBJ.search2true("PrenotaPage", search_text['ErrorPopup']['confirmation']['in-text-popup']):
+            play_alert()
+            AIOBJ.search2click("PrenotaPage",
+                               search_text['ErrorPopup']['confirmation']['in-text-popup'],
+                               config_data['config']['popup-button']['x'],
+                               config_data['config']['popup-button']['y'])
+            return False
+        elif AIOBJ.search2true("PrenotaPage", "Richiesta"):
+            play_alert()
+        else:
+            reboot()
+            return False
+    else:
+        reboot()
         return False
         
 def execution() -> None:

@@ -4,9 +4,14 @@
         "url_coord": [390, 60]
     },
     "config": {
-        "tesseract-recognition-try": 32
+        "tesseract-recognition-try": 32,
+        "prenota-function": {"top": 50, "area": 150},
+        "popup-button": {"x": 160, "y": 100}
     },
     "urls": {
         "home-page": "https://prenotami.esteri.it/"
+    },
+    "Audio": {
+        "dir": "Tools/sound/alert.wav"
     }
 }
