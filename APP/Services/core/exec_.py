@@ -8,12 +8,14 @@
 # | Imports |----------------------------------------------------------------------------------------------------------|
 from Services.AISearch.AISearch import AISearch
 from Tools.json.read_json import read_json
-from Tools.page.url_bar import write_url_bar
+from Tools.page.url_bar import write_url_bar, request_time
 from Tools.sound.play_beep import play_alert
+from log.pages.page_log import PagesLogs
 
 from Services.Process.coord_calculation import flotation_resolution
-from time import sleep
 # |--------------------------------------------------------------------------------------------------------------------|
+
+pages_logs = PagesLogs()
 
 search_text: dict[str] = read_json("Services/search_text.json")
 credentials: dict[str] = read_json("Services/credentials.json")
@@ -23,7 +25,8 @@ pg: dict[str] = {
     "root": "root",
     "login": "LoginITA",
     "home": ["HomeNA", "HomeITA"],
-    "book": "PrenotaITA"
+    "book": "PrenotaITA",
+    "popup": "PopupITA"
 }
 
 def login_page_exec() -> bool:
@@ -46,6 +49,7 @@ def login_page_exec() -> bool:
     
     # if in Login Page
     elif AIOBJ.search2true(pg["root"], ConfirmLoginPage):
+        pages_logs.log(pg["login"])
         # Input Crendentials and Log-In    
         AIOBJ.search2write(pg["login"], ST_email, credentials['email'])
         AIOBJ.search2write(pg["login"], ST_paswd, credentials['password'])
@@ -81,14 +85,17 @@ def home_page_exec() -> bool:
     # |----------------------------------------------------------------------------------------------------------------|
     
     # Change to ITALIAN language
-    AIOBJ.search2click(pg["home"][0], ST_language, 10, 10), sleep(10)
+    pages_logs.log(pg["home"][0])
+    AIOBJ.search2click(pg["home"][0], ST_language, 10, 10), request_time(13)
     
     # if in ITA HomePage
     if AIOBJ.search2true(pg["root"], ConfirmHomePageITA, False):
+        pages_logs.log(pg["home"][1])
         AIOBJ.search2click(pg["home"][1], ST_prenota)
         
         # if in ITA Prenota Page
         if AIOBJ.search2true(pg["book"], ConfirmBookPageITA):
+            pages_logs.log(pg["book"])
             return True
         else:
             reboot()
@@ -140,6 +147,7 @@ def prenota_page_exec() -> bool:
         
         # If PopUp Alert
         if AIOBJ.search2true(pg["book"], ConfirmPopup):
+            pages_logs.log(pg["popup"])
             play_alert()
             AIOBJ.search2click(pg["book"], ST_popup, CONF_popupButton_x, CONF_popupButton_y)
             return False

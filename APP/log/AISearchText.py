@@ -13,7 +13,7 @@ from Tools.json.read_json import read_json
 class Log:
     def __init__(self):
         self.AI_loop = read_json("Tools/json/data.json")["config"]["tesseract-recognition-try"]
-        self.info_space = 27
+        self.info_space = 20
         self.searchtext_space = 15
         self.percent_space = 3
         
