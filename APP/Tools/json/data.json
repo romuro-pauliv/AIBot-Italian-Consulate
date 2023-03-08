@@ -12,6 +12,7 @@
         "home-page": "https://prenotami.esteri.it/"
     },
     "Audio": {
-        "dir": "Tools/sound/alert.wav"
+        "dir": "Tools/sound/alert.wav",
+        "dirX": "Tools/sound/danger.mp3"
     }
 }

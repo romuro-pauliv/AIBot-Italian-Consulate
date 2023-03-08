@@ -9,7 +9,7 @@
 from Services.AISearch.AISearch import AISearch
 from Tools.json.read_json import read_json
 from Tools.page.url_bar import write_url_bar, request_time
-from Tools.sound.play_beep import play_alert
+from Tools.sound.play_beep import play_alert, play_danger_loop
 from log.pages.page_log import PagesLogs
 
 from Services.Process.coord_calculation import flotation_resolution
@@ -154,7 +154,7 @@ def prenota_page_exec() -> bool:
         
         # If Richiesta Page Enter
         elif AIOBJ.search2true(pg["book"], ConfirmRichiesta):
-            play_alert()
+            play_danger_loop()
             return True
         else:
             reboot()
