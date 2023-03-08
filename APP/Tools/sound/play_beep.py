@@ -6,6 +6,8 @@
 # +--------------------------------------------------------------------------------------------------------------------|
 
 # | Imports |----------------------------------------------------------------------------------------------------------|
+import os
+import subprocess
 from pydub import AudioSegment
 from pydub.playback import play
 
@@ -16,4 +18,5 @@ dir: str = read_json("Tools/json/data.json")["Audio"]["dir"]
 
 def play_alert() -> None:
     song = AudioSegment.from_wav(dir)
-    play(song)
+    with open(os.devnull, 'w') as devnull:
+        subprocess.Popen(['ffplay', '-nodisp', '-autoexit', '-loglevel', 'quiet', '-i', dir], stdout=devnull, stderr=devnull)
