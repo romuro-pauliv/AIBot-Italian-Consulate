@@ -36,5 +36,10 @@
         "confirmation": {
             "in-text-popup": "richiesto"
         }
+    },
+    "RichiestaPage": {
+        "confirmation": {
+            "header-page-ITA": "Richiesta"
+        }
     }
 }

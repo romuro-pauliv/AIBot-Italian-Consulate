@@ -1,5 +1,5 @@
 # +--------------------------------------------------------------------------------------------------------------------|
-# |                                                                                                  APP.Tools.page.py |
+# |                                                                                          APP.Tools.page.up_down.py |
 # |                                                                                             Author: Pauliv, Rômulo |
 # |                                                                                          email: romulopauliv@bk.ru |
 # |                                                                                                    encoding: UTF-8 |
@@ -10,9 +10,9 @@ from Tools.json.read_json import read_json
 from time import sleep
 import pyautogui as GUI
 # |--------------------------------------------------------------------------------------------------------------------|
+loops: int = read_json("Tools/json/data.json")['config']['tesseract-recognition-try']
 
 def updown_page(count: int) -> None:
-    loops: int = read_json("Tools/json/data.json")['config']['tesseract-recognition-try']
     cycle: int = round(loops / 4, 0)
     
     if (0 <= count < cycle):

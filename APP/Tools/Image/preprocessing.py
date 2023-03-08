@@ -13,7 +13,7 @@ import numpy as np
 class Preprocessing(object):
     @staticmethod
     def high_contrast(image: np.ndarray) -> np.ndarray:
-        image: np.ndarray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)                                 # Grayscale
+        image: np.ndarray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
         
         return image
 

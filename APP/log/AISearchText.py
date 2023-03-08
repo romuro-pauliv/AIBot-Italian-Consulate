@@ -20,7 +20,7 @@ class Log:
     def _get_loading_line(self, count: int) -> str:
         off_line = "_" * (self.AI_loop - count)
         on_line = "|" * count if count != 0 else ""
-        return f"{Fore.GREEN}|{Fore.GREEN}{on_line}{Fore.CYAN}{off_line}{Fore.GREEN}|{Style.RESET_ALL}"
+        return f"{Fore.GREEN}|{Fore.YELLOW}{on_line}{Fore.CYAN}{off_line}{Fore.GREEN}|{Style.RESET_ALL}"
     
     def _get_info_text(self, info: str, page: str, searchtext: str) -> str:
         return f"{Fore.GREEN}{page}{Fore.MAGENTA}@{info}{' ' * (self.info_space - (len(info)+len(page)))}-> " \
