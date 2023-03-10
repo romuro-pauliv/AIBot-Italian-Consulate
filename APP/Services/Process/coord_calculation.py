@@ -14,6 +14,10 @@ config: dict[str, dict[str]] = read_json("Tools/json/data.json")["config"]
 
 def flotation_resolution(coord: tuple[int]) -> tuple[int]:
     xy: dict[str, int] = {"x": 0, "y": (coord[1]-config['prenota-function']["top"])}
-    len_xy: dict[str, int] = {"x": resolution[0], "y": config['prenota-function']["area"]}
+    
+    if (xy["y"] + config["prenota-function"]["area"]) > resolution[1]:
+        len_xy: dict[str, int] = {"x": resolution[0], "y": (resolution[1] - xy["y"])}
+    else:
+        len_xy: dict[str, int] = {"x": resolution[0], "y": config['prenota-function']["area"]}
     
     return (xy['y'], xy['x'], len_xy['x'], len_xy['y'])
