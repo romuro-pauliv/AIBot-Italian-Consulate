@@ -30,6 +30,13 @@ def play_danger() -> None:
         subprocess.Popen(['ffplay', '-nodisp', '-autoexit', '-loglevel', 'quiet', '-i', dir], stdout=devnull, stderr=devnull)
         
 
+def play_beep() -> None:
+    dir: str = read_json("Tools/json/data.json")["Audio"]["beep"]
+    song = AudioSegment.from_mp3(dir)
+    with open(os.devnull, 'w') as devnull:
+        subprocess.Popen(['ffplay', '-nodisp', '-autoexit', '-loglevel', 'quiet', '-i', dir], stdout=devnull, stderr=devnull)
+        
+
 def play_danger_loop() -> None:
     while True:
         play_danger(), sleep(15)

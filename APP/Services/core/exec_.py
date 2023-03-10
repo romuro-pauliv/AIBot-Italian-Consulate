@@ -164,6 +164,9 @@ def prenota_page_exec() -> bool:
         return False
         
 def execution() -> None:
+    from log.intro.intro import _log_exec
+    _log_exec()
+    
     response_login: bool = login_page_exec()
     while response_login == False:
         response_login: bool = login_page_exec()
