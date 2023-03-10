@@ -9,6 +9,7 @@
 from Services.AISearch.AISearch import AISearch
 from Tools.json.read_json import read_json
 from Tools.page.url_bar import write_url_bar, request_time
+from Tools.page.zoom import zoom_in, zoom_out
 from Tools.sound.play_beep import play_alert, play_danger_loop
 from log.pages.page_log import PagesLogs
 
@@ -53,7 +54,9 @@ def login_page_exec() -> bool:
         # Input Crendentials and Log-In    
         AIOBJ.search2write(pg["login"], ST_email, credentials['email'])
         AIOBJ.search2write(pg["login"], ST_paswd, credentials['password'])
+        zoom_in(1)
         AIOBJ.search2click(pg["login"], ST_submt)
+        zoom_out(1)
         
         # if in HomePage 
         return True if AIOBJ.search2true(pg["root"], ConfirmHomePage) else False
