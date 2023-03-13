@@ -12,6 +12,7 @@ from Tools.page.url_bar import write_url_bar, request_time
 from Tools.page.zoom import zoom_in, zoom_out
 from Tools.sound.play_beep import play_alert, play_danger_loop
 from log.pages.page_log import PagesLogs
+from Messages.telegram import telegram_booking_alert, telegram_booking_page, telegram_login_info
 
 from Services.Process.coord_calculation import flotation_resolution
 # |--------------------------------------------------------------------------------------------------------------------|
@@ -50,6 +51,7 @@ def login_page_exec() -> bool:
     
     # if in Login Page
     elif AIOBJ.search2true(pg["root"], ConfirmLoginPage):
+        telegram_login_info()
         pages_logs.log(pg["login"])
         # Input Crendentials and Log-In    
         AIOBJ.search2write(pg["login"], ST_email, credentials['email'])
@@ -157,9 +159,11 @@ def prenota_page_exec() -> bool:
         
         # If Richiesta Page Enter
         elif AIOBJ.search2true(pg["book"], ConfirmRichiesta):
+            telegram_booking_page()
             play_danger_loop()
             return True
         else:
+            telegram_booking_alert()
             reboot()
             return False
     else:
